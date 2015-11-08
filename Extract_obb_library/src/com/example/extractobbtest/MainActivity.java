@@ -43,10 +43,6 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// InitResource(MainActivity.this);
-				// readExpansionFile();
-				// prepareFolders();
-				// extractExpansionFile(targetPath);
 				try {
 					OBBExtractor.startExtractOBB(MainActivity.this, targetPath, new IOBBExtractorCallback() {
 

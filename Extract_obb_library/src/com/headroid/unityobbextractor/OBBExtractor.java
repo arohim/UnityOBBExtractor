@@ -215,6 +215,19 @@ public class OBBExtractor {
 
 		@Override
 		protected Boolean doInBackground(String... params) {
+			boolean isOBBexist = isOBBExist();
+			if (!isOBBexist) {
+				mCallback.callback(EXTRACT_OBB_OBB_NOT_FOUND,
+						mContext.getString(R.string.extract_obb_obb_not_found_fail));
+				return false;
+			}
+			currentProgress += randomWithRange(1D, 10.99D);
+			mCallback.extractorProgress(currentProgress);
+
+			createTargetPath(mTargetPath);
+			currentProgress += randomWithRange(1D, 2.99D);
+			mCallback.extractorProgress(currentProgress);
+
 			if (!prepareFolders()) {
 				mCallback.callback(EXTRACT_OBB_CREATE_FOLDER_FAIL,
 						mContext.getString(R.string.extract_obb_create_folder_fail));
@@ -232,26 +245,19 @@ public class OBBExtractor {
 			currentProgress += randomWithRange(1D, 10.99D);
 			mCallback.extractorProgress(currentProgress);
 
-			boolean isOBBexist = isOBBExist();
-			if (!isOBBexist) {
-				mCallback.callback(EXTRACT_OBB_OBB_NOT_FOUND,
-						mContext.getString(R.string.extract_obb_obb_not_found_fail));
-				return false;
-			}
-			currentProgress += randomWithRange(1D, 10.99D);
-			mCallback.extractorProgress(currentProgress);
-
 			return extractExpansionFile();
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
-			currentProgress = MAX_PROGRESS;
-			mCallback.extractorProgress(currentProgress);
-			mCallback.callback(result ? EXTRACT_OBB_SUCCESS : EXTRACT_OBB_WRITE_FILE_FAIL,
-					result ? mContext.getString(R.string.extract_obb_success)
-							: mContext.getString(R.string.extract_obb_extract_fail));
+			if (result) {
+				currentProgress = MAX_PROGRESS;
+				mCallback.extractorProgress(currentProgress);
+				mCallback.callback(result ? EXTRACT_OBB_SUCCESS : EXTRACT_OBB_WRITE_FILE_FAIL,
+						result ? mContext.getString(R.string.extract_obb_success)
+								: mContext.getString(R.string.extract_obb_extract_fail));
+			}
 		}
 
 	}
@@ -259,5 +265,12 @@ public class OBBExtractor {
 	private double randomWithRange(double min, double max) {
 		double range = Math.abs(max - min);
 		return (Math.random() * range) + (min <= max ? min : max);
+	}
+
+	public void createTargetPath(String path) {
+		File targetFile = new File(path);
+		if (!targetFile.exists()) {
+			targetFile.mkdirs();
+		}
 	}
 }
