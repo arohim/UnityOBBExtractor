@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExtractOBBTest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="extract_obb_create_folder_fail">Create preppare folder fail.</string>
+    <string name="extract_obb_read_config_fail">Read configuration fail.</string>
+    <string name="extract_obb_obb_not_found_fail">OBB file not found.</string>
+    <string name="extract_obb_extract_fail">Extract obb fail.</string>
+    <string name="extract_obb_success">Extract obb success.</string>
+
+</resources>
