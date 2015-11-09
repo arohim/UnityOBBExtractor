@@ -22,15 +22,16 @@ import android.util.Log;
 public class OBBExtractor {
 
 	// status
-	private static int EXTRACT_OBB_SUCCESS = 0;
-	private static int EXTRACT_OBB_PENDING = 1;
-	private static int EXTRACT_OBB_EXTRACTING = 3;
+	public static final int EXTRACT_OBB_SUCCESS = 0;
+	public static final int EXTRACT_OBB_PENDING = 1;
+	public static final int EXTRACT_OBB_EXTRACTING = 3;
 
-	private static int EXTRACT_OBB_WRITE_FILE_FAIL = -1;
-	private static int EXTRACT_OBB_CREATE_FOLDER_FAIL = -2;
-	private static int EXTRACT_OBB_READ_CONFIG_FAIL = -3;
-	private static int EXTRACT_OBB_OBB_NOT_FOUND = -4;
-	private static int EXTRACT_OBB_FETCH_OBB_FAIL = -5;
+	public static final int EXTRACT_OBB_WRITE_FILE_FAIL = -1;
+	public static final int EXTRACT_OBB_CREATE_FOLDER_FAIL = -2;
+	public static final int EXTRACT_OBB_READ_CONFIG_FAIL = -3;
+	public static final int EXTRACT_OBB_OBB_NOT_FOUND = -4;
+	public static final int EXTRACT_OBB_FETCH_OBB_FAIL = -5;
+	public static final int EXTRACT_OBB_STORAGE_NOT_ENOUGH = -6;
 
 	private String mTargetPath = "";
 	private Context mContext;
@@ -230,6 +231,15 @@ public class OBBExtractor {
 			currentProgress += randomWithRange(1D, 10.99D);
 			mCallback.extractorProgress(currentProgress);
 
+			// check storage
+//			if (!isStorageEnought()) {
+//				mCallback.callback(EXTRACT_OBB_STORAGE_NOT_ENOUGH,
+//						mContext.getString(R.string.extract_obb_storage_not_enought));
+//				return false;
+//			}
+//			currentProgress += randomWithRange(1D, 10.99D);
+//			mCallback.extractorProgress(currentProgress);
+
 			createTargetPath(mTargetPath);
 			currentProgress += randomWithRange(1D, 2.99D);
 			mCallback.extractorProgress(currentProgress);
@@ -272,6 +282,11 @@ public class OBBExtractor {
 		double range = Math.abs(max - min);
 		return (Math.random() * range) + (min <= max ? min : max);
 	}
+
+//	public boolean isStorageEnought() {
+//		Helpers.getAvailableBytes(new File(Helpers.getSaveFilePath(mContext)));
+//		return false;
+//	}
 
 	public void createTargetPath(String path) {
 		File targetFile = new File(path);

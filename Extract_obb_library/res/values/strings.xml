@@ -9,5 +9,6 @@
     <string name="extract_obb_extract_fail">Extract obb fail.</string>
     <string name="extract_obb_success">Extract obb success.</string>
     <string name="extract_obb_fetch_obb_fail">Fetch obb fail.</string>
+    <string name="extract_obb_storage_not_enought">Storage not enought.</string>
 
 </resources>
