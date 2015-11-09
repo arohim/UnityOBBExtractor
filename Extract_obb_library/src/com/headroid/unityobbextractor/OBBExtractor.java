@@ -30,6 +30,7 @@ public class OBBExtractor {
 	private static int EXTRACT_OBB_CREATE_FOLDER_FAIL = -2;
 	private static int EXTRACT_OBB_READ_CONFIG_FAIL = -3;
 	private static int EXTRACT_OBB_OBB_NOT_FOUND = -4;
+	private static int EXTRACT_OBB_FETCH_OBB_FAIL = -5;
 
 	private String mTargetPath = "";
 	private Context mContext;
@@ -156,7 +157,12 @@ public class OBBExtractor {
 			mCallback.callback(EXTRACT_OBB_EXTRACTING, "Extracting");
 			// Get a ZipResourceFile representing a merger of both the main and
 			// patch files
-			ZipResourceFile expansionFile = APKExpansionSupport.getAPKExpansionZipFile(mContext, 1, 0);
+			ZipResourceFile expansionFile = APKExpansionSupport.getAPKExpansionZipFile(mContext,
+					Helpers.getVersionCode(mContext), 0);
+			if (null == expansionFile) {
+				mCallback.callback(EXTRACT_OBB_FETCH_OBB_FAIL, mContext.getString(R.string.extract_obb_fetch_obb_fail));
+				return false;
+			}
 
 			// mkdir target folder
 			File targetFile = new File(mTargetPath);
